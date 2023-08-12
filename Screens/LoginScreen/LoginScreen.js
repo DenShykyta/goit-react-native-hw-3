@@ -1,7 +1,7 @@
+import { useState } from "react";
 import {
   View,
   ImageBackground,
-  StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
@@ -26,6 +26,24 @@ import {
 } from "./LoginScreenStyle";
 
 export const LoginScreen = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(true);
+
+  const clearUserForm = () => {
+    setEmail("");
+    setPassword("");
+  };
+  const onSubmitUserLogin = () => {
+    if (!email.trim() || !password.trim()) {
+      return console.warn("Будь ласка заповніть поля");
+    }
+
+    console.log({ email, password });
+
+    clearUserForm();
+  };
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={container}>
@@ -43,22 +61,34 @@ export const LoginScreen = () => {
                   <TextInput
                     style={input}
                     placeholder="Адреса електронної пошти"
-                    placeholderTextColor={"#BDBDBD"}
+                    placeholderTextColor="#BDBDBD"
                     keyboardType="email-address"
+                    autoComplete="email"
+                    value={email}
+                    onChangeText={setEmail}
                   />
                 </View>
                 <View style={{ marginBottom: 43, position: "relative" }}>
                   <TextInput
                     style={input}
                     placeholder="Пароль"
-                    placeholderTextColor={"#BDBDBD"}
-                    secureTextEntry={true}
+                    autoComplete="off"
+                    placeholderTextColor="#BDBDBD"
+                    secureTextEntry={showPassword}
+                    value={password}
+                    onChangeText={setPassword}
                   />
-                  <TouchableOpacity style={passwordButton}>
+                  <TouchableOpacity
+                    style={passwordButton}
+                    onPress={() =>
+                      password !== "" &&
+                      setShowPassword((prevState) => !prevState)
+                    }
+                  >
                     <Text style={passwordButtonText}>Показати</Text>
                   </TouchableOpacity>
                 </View>
-                <TouchableOpacity style={button}>
+                <TouchableOpacity style={button} onPress={onSubmitUserLogin}>
                   <Text style={buttonText}>Увійти</Text>
                 </TouchableOpacity>
               </View>

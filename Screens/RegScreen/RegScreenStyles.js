@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 19,
     textAlign: "center",
-
+    marginTop: 16,
     color: "#1B4371",
   },
 });
